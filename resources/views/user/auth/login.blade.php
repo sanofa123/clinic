@@ -1,0 +1,62 @@
+@extends('user.layouts.layout')
+
+@section('title')
+{{-- here goes the title of the page --}}
+	User Login
+@endsection
+
+@section('head')
+	{{-- this is for the css of this page --}}
+	<style>
+		.pull-right {
+			float: right;
+		}
+	</style>
+@endsection
+
+@section('body')
+	<div class="container">
+		<div class="row full-height align-items-center">
+			<div class="col-md-6 ml-auto mr-auto mt-3 mb-3">
+
+				@foreach ($errors->all() as $error)
+					<div class="card-header bg-danger text-white">{{ $error }}</div>
+					<br>
+				@endforeach
+
+				<h2 class="text-center">User Login</h2>
+				<br>
+
+				<form action="{{ route('login') }}" method="POST">
+					@csrf
+					<div class="form-group">
+						<label for="email">{{ __('E-Mail Address') }}</label>
+						<input required name="email" type="email" value="{{ old('email') }}" id="email" placeholder="Type your email" class="form-control">
+					</div>
+
+					<div class="form-group">
+						<label for="password">{{ __('Password') }}</label>
+						<input required type="password" value="{{ old('password') }}" name="password" id="password" placeholder="Type your password" class="form-control">
+					</div>
+					
+                    <div class="form-group">
+						<div class="checkbox">
+							<label>
+								<input type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }}> {{ __('Remember Me') }}
+							</label>
+						</div>
+                    </div>
+
+					<div class="form-group">
+                        <button type="submit" class="btn btn-info mr-auto">
+                            {{ __('Login') }}
+                        </button>
+                        <a class="btn btn-link pull-right" href="{{ route('password.request') }}">
+                            {{ __('Forgot Your Password?') }}
+                        </a>
+                    </div>
+				</form>
+			</div>
+		</div>
+	</div>
+@endsection
